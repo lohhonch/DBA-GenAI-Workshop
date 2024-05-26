@@ -1,5 +1,5 @@
 secrets.toml
-.venv/
+venv/
 *.csv
 References/
 database/
