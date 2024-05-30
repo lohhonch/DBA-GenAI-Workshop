@@ -350,8 +350,8 @@ def rule_based_chatbot():
 		st.session_state.messages.append({"role": "user", "content": prompt})
 		
 		#modify the code below to create a rule based bot ( challenge 2), replace f"Echo: {prompt}" with get_reply(prompt)
-		response = f"Echo: {prompt}"
-		#response = get_reply(prompt)
+		# response = f"Echo: {prompt}"
+		response = get_reply(prompt)
 
 		# Display assistant response in chat message container
 		with st.chat_message("assistant"):
