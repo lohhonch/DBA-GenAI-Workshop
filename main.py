@@ -27,6 +27,7 @@ from nocode_workshop.knowledge_bot import rag_bot
 import pandas as pd
 import os
 import coding_workshop.exercises as ex
+import coding_workshop.group as grp
 from basecode.database_module import (
 	manage_tables, 
 	delete_tables, 
@@ -331,6 +332,7 @@ def main():
 							sac.MenuItem("7b. Chatbot with Memory & RAG", icon='filetype-py'),
 							sac.MenuItem("8. Database", icon='filetype-py'),
 							sac.MenuItem("9. Chatbot with Memory & RAG & recorded", icon='filetype-py'),
+							sac.MenuItem("Group Work", icon='filetype-py'),
 						]),
 					]),
 
@@ -565,6 +567,9 @@ def main():
 			# call the openai basebot with memory and RAG function and recorded data here
 			#ex.prompt_design()
 			ex.basebot_prompt_design_memory_rag_data()
+			pass
+		elif st.session_state.option == 'Group Work':
+			grp.prototype_application()
 			pass
 
 		#========================ZERO CODE workshop code below do not modify========================#

@@ -476,7 +476,7 @@ def ai_chatbot():
 		
 		# remove get_reply function and replace with chat_completion function and pass in two parameters
 		# response = get_reply(prompt)
-		response = chat_completion("You are a helpful assistant", prompt)
+		response = chat_completion("You are a yoda", prompt)
 
 
 		# Display assistant response in chat message container
@@ -652,7 +652,8 @@ def basebot_prompt_design_memory():
 				message_placeholder.markdown(full_response)
 				
 				#modify the code below by calling save_context function found in exercise 6
-				st.session_state.memory_variables.save_context({"input": "input"}, {"output": "output"})
+				# st.session_state.memory_variables.save_context({"input": "input"}, {"output": "output"})
+				st.session_state.memory_variables.save_context({"input": prompt}, {"output": full_response})
 				
 			st.session_state.chat_msg.append(
 				{"role": "assistant", "content": full_response}
