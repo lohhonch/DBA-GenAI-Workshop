@@ -400,7 +400,8 @@ def call_api_challenge():
 		#modify the code below to create a function call_api to pass the prompt_design and prompt_query to call the OpenAI API
 		if prompt_design and prompt_query:
 			#call your api_call function here
-			st.write("Call the api_call function here")
+			api_call(prompt_design, prompt_query)
+			# st.write("Call the api_call function here")
 		else:
 			st.warning("Please enter a prompt query.")
 
@@ -440,8 +441,8 @@ def chat_completion(prompt_design, prompt):
 	response = client.chat.completions.create(
 		model=MODEL,
 		messages=[
-			{"role": "system", "content": "You are a helpful assistant."},
-			{"role": "user", "content": "Tell me about Singapore in the 1970s in 50 words."},
+			{"role": "system", "content": prompt_design},
+			{"role": "user", "content": prompt},
 		],
 		temperature=0,
 	)
@@ -474,8 +475,8 @@ def ai_chatbot():
 		st.session_state.messages.append({"role": "user", "content": prompt})
 		
 		# remove get_reply function and replace with chat_completion function and pass in two parameters
-		response = get_reply(prompt)
-		#response = .....
+		# response = get_reply(prompt)
+		response = chat_completion("You are a helpful assistant", prompt)
 
 
 		# Display assistant response in chat message container
@@ -585,7 +586,7 @@ def basebot_prompt_design():
 				full_response = ""
 				# streaming function
 				#replace the prompt design "You are a helpful assistant" with the prompt design variable st.session_state.prompt_template
-				for response in chat_completion_stream("You are a helpful assistant", prompt):
+				for response in chat_completion_stream(st.session_state.prompt_template, prompt):
 					full_response += (response.choices[0].delta.content or "")
 					message_placeholder.markdown(full_response + "▌")
 				message_placeholder.markdown(full_response)
