@@ -87,6 +87,10 @@ def using_if_else():
 def button_input_exercise():
 	name = st.text_input("Enter your name:", key=2)
 	#add buton here
+	if st.button('Greetings'):
+		st.write(f'Hello ({name})')
+	else:
+		st.write('Click button please')
 	#if button...
 	# st.write("something" + name)
 	#else...
@@ -128,16 +132,20 @@ def rule_based_question_answering_challenge():
 	question = st.text_input("Enter your query:")
 	#modify below to use session state
 	if question == "What is your name?":
-		#st.write...
+		st.write('My name is hon chun.')
+		st.session_state.previous_query = question
 		#st.session_state.previous_query.....
 		pass
 	elif question == "How old are you?":
-		#st.write...
-		#st.session_state.previous_query.....
+		st.write('18')
+		st.session_state.previous_query = question
+		pass
+	elif question == "Show previous query":
+		st.write(st.session_state.previous_query)
 		pass
 	else:
-		#st.write...
-		#st.session_state.previous_query.....
+		st.write('others')
+		st.session_state.previous_query = question
 		pass
 
 #exercise 6 - simple data structure
@@ -230,7 +238,7 @@ def append_form_data_to_list():
 			"Gender": gender
 		}
 		#modify below to append data
-		#st.session_state.list_of_dict.append(...)
+		st.session_state.list_of_dict.append(person)
 	#display the list of dictionaries using a for loop
 	for x in st.session_state.list_of_dict:
 		st.write(x)
@@ -243,7 +251,47 @@ def append_form_data_to_list():
 def streamlit_app():
 	st.write("My first Streamlit App")
 	st.write("This is a Gen AI Workshop registration app for up to 5 participants")
-		
+
+	if 'participants' not in st.session_state:
+		st.session_state.participants = []
+	
+	def add_participant():
+		participant = {
+			"Name": name,
+			"Age": age,
+			"Gender": gender,
+			"Email": email,
+			"Phone Number": phone,
+			"Department": department
+		}
+		st.session_state['participants'].append(participant)
+	
+	with st.form("participant_form", clear_on_submit=True):
+		st.write("Participant Registration Form")
+
+		# Form fields
+		name = st.text_input("Name")
+		age = st.number_input("Age", min_value=16, max_value=99, step=1)
+		gender = st.selectbox("Gender", ["Male", "Female", "Other"])
+		email = st.text_input("Email")
+		phone = st.text_input("Phone Number")
+		department = st.selectbox("Department", ["Sales", "Marketing", "IT", "HR", "Finance", "Operations"])
+
+		# Submit button
+		submit_button = st.form_submit_button("Submit")
+	
+	if submit_button:
+		if len(st.session_state['participants']) < 5:
+			add_participant()
+			st.success("Registration Successful!")
+		else:
+			st.error("Registration Full")
+	
+	# 5. Display participants in a DataFrame
+	if st.session_state['participants']:
+		df = pd.DataFrame(st.session_state['participants'])
+		st.write(df)
+
 	# 1. create a form from the streamlit documentation
 
 	# 2. after the form is submitted, set it into a dictionary
